@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "agricultureapp-389908",
+  "private_key_id": "3c41c1cbdb8e454c91a7fdd07be05685127607ab",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDOAwvu+Fa54DFW\n6y2Rc0kvsqBqAxBeF4sqDjd8MOHLy0YZ0Y8gQx2L+0HxizMFTXJXp+yhrWgwbEB+\nezTIO7bajvnHSqWLX3dveJuySydiUYhhTyMMviKP2JGTNvB55ECg1Mawrp3ARHp3\nPu7u9A1a/h42XiXXm2yULZHEKWD/WcY46REy81WHMPP0loRJm/OP5xWIt6//7VvB\nG3oW9lVtID3sWxvL0DlE963Y8Da2Pi2ux06oJcXoZ9Q+E12G8mADHkCRTb95weQC\nk3AfrIWaonzSbYzE7epldxH2CrPEbMvumdGkQ6tmtqo80qy1x6ZWzUl1OFSpYdqf\nLhQZiX5BAgMBAAECggEAGW4y2Or6+bL9JDefxmau0B6CwtNh/9t0KFrc6o22McwD\n+UfvHRJr4U3A1CpUwADRbpSiF0sqo1+ZjoNy/oywg8ZGex1x1gSQ38fJoHa6g96A\nsVJthzMpXQxk3AFaKhHNEI1zgXfsrUFGxNWV9RVXWLYp0JhKn5TmEFyXs9lPyfV4\nEyJGSOXyTsNyXgCmT/oORQEOpMOVgdEPTpyK37Uxan/v48/IBeZE2TRuuBmTlfpv\nGFjQT0igRHZrOmqIPxHWZylQQxWXum3DAY7Huui3T6KdlW1nFedO6nD63aHUFD3U\nKiJUVTWMisETfnd+uo8J0pvE/pKy0m1YCSneA7s56QKBgQD9gYNjIoH7tng8DnbP\noHkN3ucQLPawsnkdnL6S6wDOXdfRs6c45HQvuPbfMaveE8M/YxhdgYo44IPQFRU1\nGr7XUkWtYvKZjVMbLdml186ThSuxlSFIXQvHsvU1kz8sDfu0eEQXX4xRUV5M0eaF\n1uQM2pZuYkc7OJjbmDcK9z3rRwKBgQDQCenoMFUmRsLva4C3XLxtGB4YCLZ7noIR\nN8wNlGHXUZDgC+e5dc/Ec/n5e4aOMMBCsndKgql9DDxgR/K+volOTsIwcG7ue4sH\nYYxfNQ5q04UvXBaE+0TGjtDt9eruHEZsNMC7nLC26tPlL1ZPsJHRwmng4rneOwxi\nHsOr/Jl+NwKBgC/VVkNIaZpjTcCXQhffQbg6TQMiWNHyeyP5RYRXT2mhD24EJhN4\nF+xBTGPE7ZcTx42YVyqdnMUqp/SFZeEFUOk0Hu2edARBRGMmfaDrXZE8WYhCiWss\nE2L1A4u+YvcfFFVzM/XtE37siYyZNpQefh1myWe+p44nGcClsg0hpc9VAoGBAK5J\n7+23OE8F72BXpxF3HuEi2Gt4OTFdvUghf9FMo5+ZVQ9uyebFPZgvNZh+lV7gluIJ\n1AjXaJk7vAVJoaONy0iQkP215Cnl1LcNUWWd9IMozCa+NpuYSqkykvUZFoX/qDwV\nAfbrsdy85WLXgq7mlXOvNbbTG7aDr78wWOvohsuHAoGBAOVRw13eY5KPAeH+BtqX\nO1Z+GB7V+C1Z7tSu7HxIvUKI8sRHU2fYr0Y1Xp4l4kdfRdnPoMge6UIxKa89oRGN\nUMJob5u95L8NXK+9csMGRXmXbxT6/wDxyOeotCdIVMVqeL1N+h9nGeHrd7wPzatG\nUbkR79WldQxXskjMn1FMLQf+\n-----END PRIVATE KEY-----\n",
+  "client_email": "agri-app-service-acc@agricultureapp-389908.iam.gserviceaccount.com",
+  "client_id": "117353733427625375350",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/agri-app-service-acc%40agricultureapp-389908.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
