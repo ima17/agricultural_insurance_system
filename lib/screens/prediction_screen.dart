@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:agricultural_insurance_system/constants/url_links.dart';
 import 'package:agricultural_insurance_system/models/application_data.dart';
 import 'package:agricultural_insurance_system/models/district_data.dart';
 import 'package:agricultural_insurance_system/models/flood_risk_data.dart';
@@ -28,6 +29,7 @@ class PredictionScreen extends StatefulWidget {
 
 class _PredictionScreenState extends State<PredictionScreen> {
   PredictionData? predictionData;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -36,7 +38,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
   }
 
   Future<void> fetchData() async {
-    const url = 'https://3e87-35-221-197-248.ngrok.io/Premium';
+    const url = premiumLink;
 
     final requestBody = {
       'gnd': widget.districtData!.gnd,
@@ -59,24 +61,56 @@ class _PredictionScreenState extends State<PredictionScreen> {
       final jsonResponse = jsonDecode(response.body);
       setState(() {
         predictionData = PredictionData.fromJson(jsonResponse);
+        isLoading = false;
       });
     } else {
       print('Request failed with status: ${response.statusCode}.');
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (predictionData != null)
-          Text('Premium Rate: ${predictionData!.premiumRate}'),
-        if (predictionData != null)
-          Text('Given Sum Assured: ${predictionData!.givenSumAssured}'),
-        if (predictionData != null)
-          Text('Monthly Premium: ${predictionData!.monthlyPremium}'),
-      ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Prediction Details'),
+      ),
+      body: Center(
+        child: isLoading
+            ? const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  SizedBox(height: 16),
+                  Text(
+                    'Predicting the Risk',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ],
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (predictionData != null)
+                    Text(
+                      'Premium Rate: ${predictionData!.premiumRate}',
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                  if (predictionData != null)
+                    Text(
+                      'Given Sum Assured: ${predictionData!.givenSumAssured}',
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                  if (predictionData != null)
+                    Text(
+                      'Monthly Premium: ${predictionData!.monthlyPremium}',
+                      style: const TextStyle(fontSize: 24),
+                    ),
+                ],
+              ),
+      ),
     );
   }
 }
-

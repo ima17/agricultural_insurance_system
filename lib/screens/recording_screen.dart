@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
+import 'package:agricultural_insurance_system/constants/url_links.dart';
 import 'package:agricultural_insurance_system/models/application_data.dart';
 import 'package:agricultural_insurance_system/screens/application_screen.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
 class RecordingScreen extends StatefulWidget {
-  const RecordingScreen({super.key});
+  const RecordingScreen({Key? key}) : super(key: key);
 
   @override
   State<RecordingScreen> createState() => _RecordingScreenState();
@@ -74,7 +75,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Audio Recorder'),
+        title: const Text('Record the Voice'),
       ),
       body: Center(
         child: Column(
@@ -108,14 +109,40 @@ class _RecordingScreenState extends State<RecordingScreen> {
               onPressed: _play,
               child: const Icon(Icons.play_arrow),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 60),
             ElevatedButton(
               onPressed: () async {
                 if (_path != null) {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return const Dialog(
+                        child: Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CircularProgressIndicator(),
+                              SizedBox(height: 16),
+                              Text(
+                                'Filling the application',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  );
+
                   File file = File(_path!);
                   var request = http.MultipartRequest(
                     'POST',
-                    Uri.parse('https://91bb-35-225-150-34.ngrok.io/uploadert'),
+                    Uri.parse(recordLink),
                   );
                   request.files.add(http.MultipartFile(
                     'file',
@@ -142,9 +169,14 @@ class _RecordingScreenState extends State<RecordingScreen> {
                   } else {
                     print('Audio uploading failed.');
                   }
+
+                  Navigator.pop(context); // Close the loading dialog.
                 }
               },
-              child: const Text('Save and Next'),
+              child: const Text(
+                'Save and Next',
+                style: TextStyle(fontSize: 18),
+              ),
             ),
           ],
         ),

@@ -1,3 +1,4 @@
+import 'package:agricultural_insurance_system/constants/url_links.dart';
 import 'package:agricultural_insurance_system/models/application_data.dart';
 import 'package:agricultural_insurance_system/models/district_data.dart';
 import 'package:agricultural_insurance_system/models/flood_risk_data.dart';
@@ -38,10 +39,6 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
     print(
         'Latitude: ${widget.currentPosition.latitude}, Longitude: ${widget.currentPosition.latitude}');
 
-    const url1 = 'https://517f-34-85-162-247.ngrok.io/ADMBoundry';
-    const url2 = 'https://517f-34-85-162-247.ngrok.io/flood_risk';
-    const url3 = 'https://0701-35-221-231-137.ngrok.io/weather_risk';
-
     final headers = {'Content-Type': 'application/json'};
     final requestBody1 = {
       'lat': widget.currentPosition.latitude,
@@ -54,7 +51,7 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
     };
 
     try {
-      final response1 = await http.post(Uri.parse(url1),
+      final response1 = await http.post(Uri.parse(admBoundryLink),
           headers: headers, body: jsonEncode(requestBody1));
 
       if (response1.statusCode == 200) {
@@ -62,7 +59,7 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
         print('API 1 response: ${response1.body}');
         districtData = DistrictData.fromJson(jsonDecode(response1.body));
 
-        final response2 = await http.post(Uri.parse(url2),
+        final response2 = await http.post(Uri.parse(floodRiskLink),
             headers: headers, body: jsonEncode(requestBody2));
 
         if (response2.statusCode == 200) {
@@ -78,7 +75,7 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
             'season': widget.applicationData!.occupation
           };
 
-          final response3 = await http.post(Uri.parse(url3),
+          final response3 = await http.post(Uri.parse(weatherRiskLink),
               headers: headers, body: jsonEncode(requestBody3));
 
           if (response3.statusCode == 200) {
@@ -123,43 +120,60 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
                 children: [
                   CircularProgressIndicator(),
                   SizedBox(height: 16),
-                  Text('Calculating Risks'),
+                  Text(
+                    'Calculating Risks',
+                    style: TextStyle(fontSize: 16),
+                  ),
                 ],
               )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   if (districtData != null)
-                    Text('District: ${districtData!.district}'),
-                  if (districtData != null) Text('GND: ${districtData!.gnd}'),
-                  SizedBox(height: 16),
+                    Text(
+                      'District: ${districtData!.district}',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                  if (districtData != null)
+                    Text(
+                      'GND: ${districtData!.gnd}',
+                      style: TextStyle(fontSize: 24),
+                    ),
+                  SizedBox(height: 50),
                   if (floodRiskData != null)
-                    Text('Flood Risk: ${floodRiskData!.floodRisk}'),
+                    Text(
+                      'Flood Risk: ${floodRiskData!.floodRisk}',
+                      style: TextStyle(fontSize: 24),
+                    ),
                   SizedBox(height: 16),
                   if (weatherRiskData != null)
-                    Text('Weather Risk: ${weatherRiskData!.weatherRisk}'),
+                    Text(
+                      'Weather Risk: ${weatherRiskData!.weatherRisk}',
+                      style: TextStyle(fontSize: 24),
+                    ),
                 ],
               ),
       ),
       floatingActionButton: ElevatedButton(
-         
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => PredictionScreen(
-                      applicationData: widget.applicationData,
-                      districtData: districtData,
-                      weatherRiskData: weatherRiskData,
-                      floodRiskData: floodRiskData,
-                    )),
+              builder: (context) => PredictionScreen(
+                applicationData: widget.applicationData,
+                districtData: districtData,
+                weatherRiskData: weatherRiskData,
+                floodRiskData: floodRiskData,
+              ),
+            ),
           );
         },
-        child: const Text('Save and Next'),
-        
+        child: const Text(
+          'Save and Next',
+          style: TextStyle(fontSize: 18),
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      
     );
   }
 }
