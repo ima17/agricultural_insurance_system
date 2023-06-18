@@ -1,12 +1,12 @@
 class ApplicationData {
-  final String name;
-  final String address;
-  final String contactNumber;
-  final String dateOfBirth;
-  final String gender;
-  final String occupation;
-  final String age;
-  final String propertySize;
+  String name;
+  String address;
+  String contactNumber;
+  String dateOfBirth;
+  String gender;
+  String occupation;
+  String age;
+  String propertySize;
 
   ApplicationData({
     required this.name,
