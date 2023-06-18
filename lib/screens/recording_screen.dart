@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
+import 'package:agricultural_insurance_system/models/application_data.dart';
+import 'package:agricultural_insurance_system/screens/application_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:http/http.dart' as http;
@@ -20,7 +22,8 @@ class _RecordingScreenState extends State<RecordingScreen> {
   bool _isRecording = false;
   String? _path;
   Stopwatch _stopwatch = Stopwatch();
-  final _stopwatchTimer = Stream<int>.periodic(const Duration(seconds: 1), (x) => x);
+  final _stopwatchTimer =
+      Stream<int>.periodic(const Duration(seconds: 1), (x) => x);
 
   @override
   void initState() {
@@ -90,46 +93,56 @@ class _RecordingScreenState extends State<RecordingScreen> {
             const SizedBox(height: 20),
             _isRecording
                 ? FloatingActionButton(
+                    heroTag: "btn1",
                     onPressed: _stopRecording,
                     child: const Icon(Icons.stop),
                   )
                 : FloatingActionButton(
+                    heroTag: "btn2",
                     onPressed: _startRecording,
                     child: const Icon(Icons.mic),
                   ),
             const SizedBox(height: 20),
             FloatingActionButton(
+              heroTag: "btn3",
               onPressed: _play,
               child: const Icon(Icons.play_arrow),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () async{
+              onPressed: () async {
                 if (_path != null) {
-      File file = File(_path!);
-      var request = http.MultipartRequest(
-        'POST',
-        Uri.parse('https://f89e-34-125-177-37.ngrok.io/uploadert'),
-      );
-      request.files.add(http.MultipartFile(
-        'file',
-        file.readAsBytes().asStream(),
-        file.lengthSync(),
-        filename: file.path.split("/").last,
-      ));
-      var response = await request.send();
-      if (response.statusCode == 200) {
-        print('Audio uploaded and processed successfully.');
-        response.stream.transform(utf8.decoder).listen((value) {
-        print(value);
-        Map<String, dynamic> data = jsonDecode(value);
-        print(data);
-      });
-
-      } else {
-        print('Audio uploading failed.');
-      }
-    }
+                  File file = File(_path!);
+                  var request = http.MultipartRequest(
+                    'POST',
+                    Uri.parse('https://6797-35-225-150-34.ngrok.io/uploadert'),
+                  );
+                  request.files.add(http.MultipartFile(
+                    'file',
+                    file.readAsBytes().asStream(),
+                    file.lengthSync(),
+                    filename: file.path.split("/").last,
+                  ));
+                  var response = await request.send();
+                  if (response.statusCode == 200) {
+                    print('Audio uploaded and processed successfully.');
+                    response.stream.transform(utf8.decoder).listen((value) {
+                      Map<String, dynamic> data = jsonDecode(value);
+                      ApplicationData applicationData =
+                          ApplicationData.fromJson(data['application_data']);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ApplicationScreen(
+                            applicationData: applicationData,
+                          ),
+                        ),
+                      );
+                    });
+                  } else {
+                    print('Audio uploading failed.');
+                  }
+                }
               },
               child: const Text('Save and Next'),
             ),
@@ -139,7 +152,3 @@ class _RecordingScreenState extends State<RecordingScreen> {
     );
   }
 }
-
-
-
-
