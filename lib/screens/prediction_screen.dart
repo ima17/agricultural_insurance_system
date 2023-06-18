@@ -1,15 +1,82 @@
+import 'dart:convert';
+
+import 'package:agricultural_insurance_system/models/application_data.dart';
+import 'package:agricultural_insurance_system/models/district_data.dart';
+import 'package:agricultural_insurance_system/models/flood_risk_data.dart';
+import 'package:agricultural_insurance_system/models/prediction_data.dart';
+import 'package:agricultural_insurance_system/models/whether_risk_data.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class PredictionScreen extends StatefulWidget {
-  const PredictionScreen({Key? key}) : super(key: key);
+  final ApplicationData? applicationData;
+  final DistrictData? districtData;
+  final WeatherRiskData? weatherRiskData;
+  final FloodRiskData? floodRiskData;
+
+  const PredictionScreen({
+    Key? key,
+    required this.applicationData,
+    required this.districtData,
+    required this.weatherRiskData,
+    required this.floodRiskData,
+  }) : super(key: key);
 
   @override
   State<PredictionScreen> createState() => _PredictionScreenState();
 }
 
 class _PredictionScreenState extends State<PredictionScreen> {
+  PredictionData? predictionData;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    const url = 'https://3e87-35-221-197-248.ngrok.io/Premium';
+
+    final requestBody = {
+      'gnd': widget.districtData!.gnd,
+      'district': widget.districtData!.district,
+      'method': widget.applicationData!.age,
+      'season': widget.applicationData!.occupation,
+      'paddy_type': 3,
+      'flood_risk': widget.floodRiskData!.floodRisk,
+      'weather_risk': widget.weatherRiskData!.weatherRisk,
+      'land_size': 3,
+    };
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(requestBody),
+    );
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        predictionData = PredictionData.fromJson(jsonResponse);
+      });
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Text("Prediction Screen");
+    return Column(
+      children: [
+        if (predictionData != null)
+          Text('Premium Rate: ${predictionData!.premiumRate}'),
+        if (predictionData != null)
+          Text('Given Sum Assured: ${predictionData!.givenSumAssured}'),
+        if (predictionData != null)
+          Text('Monthly Premium: ${predictionData!.monthlyPremium}'),
+      ],
+    );
   }
 }
+

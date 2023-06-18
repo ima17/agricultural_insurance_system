@@ -115,7 +115,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                   File file = File(_path!);
                   var request = http.MultipartRequest(
                     'POST',
-                    Uri.parse('https://6797-35-225-150-34.ngrok.io/uploadert'),
+                    Uri.parse('https://91bb-35-225-150-34.ngrok.io/uploadert'),
                   );
                   request.files.add(http.MultipartFile(
                     'file',

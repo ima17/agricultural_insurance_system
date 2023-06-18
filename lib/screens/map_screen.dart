@@ -1,11 +1,14 @@
+import 'package:agricultural_insurance_system/models/application_data.dart';
+import 'package:agricultural_insurance_system/screens/risks_show_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:permission_handler/permission_handler.dart' as ph;
-
+import 'dart:async';
 
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key});
+  final ApplicationData? applicationData;
+  const MapScreen({super.key, this.applicationData});
 
   @override
   MapScreenState createState() => MapScreenState();
@@ -32,8 +35,8 @@ class MapScreenState extends State<MapScreen> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Location Permission Denied'),
-            content:
-                const Text('Please enable location permission to use this feature.'),
+            content: const Text(
+                'Please enable location permission to use this feature.'),
             actions: [
               TextButton(
                 onPressed: () {
@@ -70,10 +73,15 @@ class MapScreenState extends State<MapScreen> {
     });
   }
 
-  void _onSaveAndNext() {
-    print(
-        'Latitude: ${_currentPosition!.latitude}, Longitude: ${_currentPosition!.longitude}');
-    // Navigate to the next screen or perform any other action
+  void _onSaveAndNext() async {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => RiskShowScreen(
+                currentPosition: _currentPosition!,
+                applicationData: widget.applicationData,
+              )),
+    );
   }
 
   @override
