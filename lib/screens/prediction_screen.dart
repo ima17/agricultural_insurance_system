@@ -46,7 +46,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
       'paddy_type': 3,
       'flood_risk': widget.floodRiskData!.floodRisk,
       'weather_risk': widget.weatherRiskData!.weatherRisk,
-      'land_size': 3,
+      'land_size': 1.5,
     };
 
     final response = await http.post(
