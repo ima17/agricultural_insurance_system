@@ -6,6 +6,7 @@ import 'package:agricultural_insurance_system/models/district_data.dart';
 import 'package:agricultural_insurance_system/models/flood_risk_data.dart';
 import 'package:agricultural_insurance_system/models/prediction_data.dart';
 import 'package:agricultural_insurance_system/models/whether_risk_data.dart';
+import 'package:agricultural_insurance_system/screens/result_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -75,7 +76,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Prediction Details'),
+        title: const Text('Predicted Premium'),
       ),
       body: Center(
         child: isLoading
@@ -85,7 +86,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
                   CircularProgressIndicator(),
                   SizedBox(height: 16),
                   Text(
-                    'Predicting the Risk',
+                    'Predicting the Premium',
                     style: TextStyle(fontSize: 20),
                   ),
                 ],
@@ -111,6 +112,27 @@ class _PredictionScreenState extends State<PredictionScreen> {
                 ],
               ),
       ),
+      floatingActionButton: ElevatedButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ResultScreen(
+                applicationData: widget.applicationData,
+                districtData: widget.districtData,
+                weatherRiskData: widget.weatherRiskData,
+                floodRiskData: widget.floodRiskData,
+                predictionData: predictionData,
+              ),
+            ),
+          );
+        },
+        child: const Text(
+          'Show Results',
+          style: TextStyle(fontSize: 18),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
