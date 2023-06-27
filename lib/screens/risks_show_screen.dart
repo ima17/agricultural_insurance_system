@@ -4,10 +4,58 @@ import 'package:agricultural_insurance_system/models/district_data.dart';
 import 'package:agricultural_insurance_system/models/flood_risk_data.dart';
 import 'package:agricultural_insurance_system/models/whether_risk_data.dart';
 import 'package:agricultural_insurance_system/screens/prediction_screen.dart';
+import 'package:agricultural_insurance_system/screens/risks_show_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
+import 'package:charts_flutter/flutter.dart' as charts;
+
+import 'risks_show_screen.dart';
+
+class ProgressIndicatorWidget extends StatelessWidget {
+  final String value;
+
+  ProgressIndicatorWidget({required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    Color progressColor;
+    double progressValue;
+
+    switch (value) {
+      case 'No':
+        progressColor = Colors.green;
+        progressValue = 0.2;
+        break;
+      case 'Moderate':
+        progressColor = Color.fromARGB(255, 212, 171, 36);
+        progressValue = 0.65;
+        break;
+      case 'High':
+        progressColor = Colors.red;
+        progressValue = 0.95;
+        break;
+      default:
+        progressColor = Colors.transparent;
+        progressValue = 0.0;
+    }
+
+    return SizedBox(
+      height: 30, // Set the desired height
+      child: ClipRRect(
+        borderRadius:
+            BorderRadius.circular(20), // Set the desired border radius
+        child: LinearProgressIndicator(
+          value: progressValue,
+          backgroundColor: Colors.grey[300],
+          valueColor: AlwaysStoppedAnimation<Color>(progressColor),
+        ),
+      ),
+    );
+  }
+}
 
 class RiskShowScreen extends StatefulWidget {
   final ApplicationData? applicationData;
@@ -107,6 +155,9 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
     });
   }
 
+  get floodRisk => floodRiskData!.floodRisk;
+  get weatherRisk => weatherRiskData!.weatherRisk;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,32 +177,121 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
                   ),
                 ],
               )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (districtData != null)
-                    Text(
-                      'District: ${districtData!.district}',
-                      style: TextStyle(fontSize: 24),
+            : Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // First Section: Location Details
+                    Container(
+                      color: Colors.grey[200],
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Location Details',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 16),
+                          if (districtData != null)
+                            Table(
+                              border: TableBorder.all(
+                                  color: Colors.black, width: 1.0),
+                              columnWidths: const {
+                                0: FlexColumnWidth(),
+                                1: FlexColumnWidth(),
+                              },
+                              children: [
+                                TableRow(
+                                  decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          255, 255, 255, 255)),
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        'District',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        'GN Division',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                TableRow(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        districtData!.district,
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        districtData!.gnd,
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                        ],
+                      ),
                     ),
-                  if (districtData != null)
-                    Text(
-                      'GND: ${districtData!.gnd}',
-                      style: TextStyle(fontSize: 24),
+                    SizedBox(height: 36),
+                    Divider(), // Add divider between sections
+                    SizedBox(height: 36),
+                    // Second Section: Risk Levels
+                    Container(
+                      color: Color.fromARGB(255, 255, 255, 255),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Risk Levels',
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 16),
+                          //progress bar
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Text(
+                              'Flood Risk: $floodRisk',
+                              style: TextStyle(fontSize: 18),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                          ProgressIndicatorWidget(value: floodRisk),
+                          SizedBox(height: 42),
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            child: Text(
+                              'Weather Risk: $weatherRisk',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ),
+                          ProgressIndicatorWidget(value: weatherRisk),
+                        ],
+                      ),
                     ),
-                  SizedBox(height: 50),
-                  if (floodRiskData != null)
-                    Text(
-                      'Flood Risk: ${floodRiskData!.floodRisk}',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  SizedBox(height: 16),
-                  if (weatherRiskData != null)
-                    Text(
-                      'Weather Risk: ${weatherRiskData!.weatherRisk}',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                ],
+                  ],
+                ),
               ),
       ),
       floatingActionButton: ElevatedButton(
@@ -175,5 +315,19 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
+    
+    
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
