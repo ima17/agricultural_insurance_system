@@ -13,8 +13,6 @@ const weatherRiskLink = '${baseUrl}weather_risk';
 
 
 
-
-
 // {
 //   "flood_risk":"High"
 // }

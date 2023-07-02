@@ -31,7 +31,7 @@ class ProgressIndicatorWidget extends StatelessWidget {
         break;
       case 'Moderate':
         progressColor = Color.fromARGB(255, 212, 171, 36);
-        progressValue = 0.65;
+        progressValue = 0.55;
         break;
       case 'High':
         progressColor = Colors.red;
