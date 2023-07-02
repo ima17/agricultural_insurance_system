@@ -1,5 +1,33 @@
-const recordLink = 'https://ca9a-34-125-189-152.ngrok.io/record';
-const premiumLink = 'https://b75d-35-236-229-251.ngrok.io/Premium';
-const admBoundryLink = 'https://eb7a-34-86-236-25.ngrok.io/ADMBoundry';
-const floodRiskLink = 'https://eb7a-34-86-236-25.ngrok.io/flood_risk';
-const weatherRiskLink = 'https://0a93-34-91-50-202.ngrok.io/weather_risk';
+
+const baseUrl = 'https://63894d1b-2d24-4306-ba9a-1bb2b0ec5423.mock.pstmn.io/';
+
+
+
+const recordLink = '${baseUrl}record';
+const premiumLink = '${baseUrl}Premium';
+const admBoundryLink = '${baseUrl}ADMBoundry';
+const floodRiskLink = '${baseUrl}flood_risk';
+const weatherRiskLink = '${baseUrl}weather_risk';
+
+
+
+
+
+
+
+// {
+//   "flood_risk":"High"
+// }
+
+// {
+//   "GND":"Udubaddawa",
+//   "District":"Kurunegala"
+// }
+
+// {
+//   "weather_risk":"Moderate"
+// }
+
+// {
+//   "premium_rate": "8.333333333333334", "given_sum_assured": "154043.0", "monthly_premium": "1069.7430555555557" 
+// }

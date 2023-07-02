@@ -78,40 +78,108 @@ class _PredictionScreenState extends State<PredictionScreen> {
       appBar: AppBar(
         title: const Text('Predicted Premium'),
       ),
-      body: Center(
-        child: isLoading
-            ? const Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(),
-                  SizedBox(height: 16),
-                  Text(
-                    'Predicting the Premium',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ],
-              )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  if (predictionData != null)
-                    Text(
-                      'Premium Rate: ${predictionData!.premiumRate}',
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                  if (predictionData != null)
-                    Text(
-                      'Given Sum Assured: ${predictionData!.givenSumAssured}',
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                  if (predictionData != null)
-                    Text(
-                      'Monthly Premium: ${predictionData!.monthlyPremium}',
-                      style: const TextStyle(fontSize: 24),
-                    ),
-                ],
-              ),
+body: Center(
+  child: isLoading
+      ? Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(),
+            SizedBox(height: 16),
+            Text(
+              'Predicting the Premium',
+              style: TextStyle(fontSize: 20),
+            ),
+          ],
+        )
+: DataTable(
+  columns: const [
+    DataColumn(
+      label: Text(
+        'Parameter',
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
       ),
+    ),
+    DataColumn(
+      label: Text(
+        'Value',
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+    ),
+  ],
+  rows: [
+    if (predictionData != null) ...[
+      DataRow(
+        cells: [
+          DataCell(
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Premium Rate',
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+          ),
+          DataCell(
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                double.parse(predictionData!.premiumRate).toStringAsFixed(2)+' %',
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+          ),
+        ],
+      ),
+      DataRow(
+        cells: [
+          DataCell(
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Given Sum Assured',
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+          ),
+          DataCell(
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('Rs.'+
+                predictionData!.givenSumAssured,
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+          ),
+        ],
+      ),
+      DataRow(
+        cells: [
+          DataCell(
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Monthly Premium',
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+          ),
+          DataCell(
+            Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('Rs.'+
+                double.parse(predictionData!.monthlyPremium).toStringAsFixed(2),
+                style: TextStyle(fontSize: 14),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ],
+  ],
+),
+
+),
+
       floatingActionButton: ElevatedButton(
         onPressed: () {
           Navigator.push(
