@@ -1,9 +1,12 @@
+import 'package:agricultural_insurance_system/screens/recording_screen.dart';
+import 'package:agricultural_insurance_system/widgets/button_card.dart';
 import 'package:agricultural_insurance_system/widgets/home_screen_card.dart';
 import 'package:flutter/material.dart';
 import 'package:agricultural_insurance_system/services/location_service.dart';
 import 'package:intl/intl.dart';
 
 import '../services/weather_data_service.dart';
+import '../widgets/top_container.dart';
 
 class HomeScreen extends StatefulWidget {
   final weatherData;
@@ -53,20 +56,54 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            HomeScreenCard(
-              location: cityName,
-              date: datetime,
-              icon: weatherIcon,
-              temperature: tempreture,
+      body: Stack(
+        children: [
+          TopContainer(),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 160), 
+                HomeScreenCard(
+                  location: cityName,
+                  date: datetime,
+                  icon: weatherIcon,
+                  temperature: tempreture,
+                ),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ButtonCard(
+                        iconLink: "assets/icons/fill.png",
+                        label: 'Fill a New Application',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  RecordingScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 20), // Add space between the two cards
+                    Expanded(
+                      child: ButtonCard(
+                        iconLink: "assets/icons/filled.png",
+                        label: 'Show Filled Applications',
+                        onTap: () {},
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
