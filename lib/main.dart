@@ -1,8 +1,7 @@
-//import 'package:agricultural_insurance_system/screens/recording_screen.dart';
-import 'package:agricultural_insurance_system/screens/recording_screen.dart';
-//import 'package:agricultural_insurance_system/screens/risks_show_screen.dart';
+import 'package:agricultural_insurance_system/screens/loading_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'configs/palette.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,10 +14,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: Colors.green, 
+        scaffoldBackgroundColor: Palette.kbackgroundColor,
+        primaryColor: Palette.kprimaryColor,
       ),
-      home: const RecordingScreen(),
-      debugShowCheckedModeBanner: false, 
+      home: const LoadingScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
