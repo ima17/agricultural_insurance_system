@@ -16,6 +16,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Palette.kbackgroundColor,
         primaryColor: Palette.kprimaryColor,
+        colorScheme: ColorScheme.fromSeed(seedColor: Palette.kprimaryColor),
+        appBarTheme: const AppBarTheme(
+          centerTitle: true,
+          foregroundColor: Colors.white,
+          iconTheme: IconThemeData(color: Colors.white),
+          color: Palette.kprimaryColor,
+        ),
+        // useMaterial3: true,
       ),
       home: const LoadingScreen(),
       debugShowCheckedModeBanner: false,
