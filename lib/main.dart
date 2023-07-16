@@ -15,13 +15,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
         scaffoldBackgroundColor: Palette.kBackgroundColor,
-        primaryColor: Palette.kprimaryColor,
-        colorScheme: ColorScheme.fromSeed(seedColor: Palette.kprimaryColor),
+        primaryColor: Palette.kPrimaryColor,
+        colorScheme: ColorScheme.fromSeed(seedColor: Palette.kPrimaryColor),
         appBarTheme: const AppBarTheme(
           centerTitle: true,
           foregroundColor: Colors.white,
           iconTheme: IconThemeData(color: Colors.white),
-          color: Palette.kprimaryColor,
+          color: Palette.kPrimaryColor,
         ),
         // useMaterial3: true,
       ),

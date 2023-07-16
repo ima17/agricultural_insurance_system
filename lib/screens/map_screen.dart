@@ -86,7 +86,7 @@ class MapScreenState extends State<MapScreen> {
             child: _isLoading
                 ? Center(
                     child: SpinKitDoubleBounce(
-                      color: Palette.kprimaryColor,
+                      color: Palette.kPrimaryColor,
                       size: 100.0,
                     ),
                   )

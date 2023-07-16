@@ -13,7 +13,7 @@ class ButtonWidget extends StatelessWidget {
   const ButtonWidget({
     Key? key,
     required this.buttonText,
-    this.buttonBGColor = Palette.kprimaryColor,
+    this.buttonBGColor = Palette.kPrimaryColor,
     this.buttonTextColor = Palette.kWhiteColor,
     this.buttonLeadingIcon,
     this.isDisabled = false,
