@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-const String kApiKey = "";
+const String kApiKey = "216aaf070eb2da400b07aa8e6c8e3f7b";
 
 const String kurl = "https://api.openweathermap.org/data/2.5/weather";
 

@@ -18,7 +18,7 @@ class ButtonCard extends StatelessWidget {
       child: SizedBox(
         child: Card(
           elevation: 20.0,
-          shadowColor: Palette.kdropShadowColor.withOpacity(0.3),
+          shadowColor: Palette.kDropShadowColor.withOpacity(0.3),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),

@@ -1,3 +1,4 @@
+import 'package:agricultural_insurance_system/constants/theme_constants.dart';
 import 'package:flutter/material.dart';
 
 import '../configs/palette.dart';
@@ -21,9 +22,9 @@ class HomeScreenCard extends StatelessWidget {
     return SizedBox(
       child: Card(
         elevation: 20.0,
-        shadowColor: Palette.kdropShadowColor.withOpacity(0.3),
+        shadowColor: Palette.kDropShadowColor.withOpacity(0.3),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(ThemeConstants.borderRadius),
         ),
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -51,7 +52,7 @@ class HomeScreenCard extends StatelessWidget {
                         Text(
                           date ?? "",
                           style: TextStyle(
-                              fontSize: 12, color: Palette.kheadingColor),
+                              fontSize: 12, color: Palette.kHeadingColor),
                         )
                       ],
                     ),
@@ -76,7 +77,7 @@ class HomeScreenCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: Palette.kdropShadowColor.withOpacity(0.3),
+                          color: Palette.kDropShadowColor.withOpacity(0.3),
                           blurRadius: 30.0,
                           offset: Offset(0, 4),
                         ),
