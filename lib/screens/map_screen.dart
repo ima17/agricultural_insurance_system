@@ -1,14 +1,18 @@
 import 'package:agricultural_insurance_system/models/application_data.dart';
 import 'package:agricultural_insurance_system/screens/risks_show_screen.dart';
+import 'package:agricultural_insurance_system/widgets/button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
-import 'package:permission_handler/permission_handler.dart' as ph;
-import 'dart:async';
+import '../configs/palette.dart';
+import '../services/location_service.dart';
+import '../widgets/map_widget.dart';
 
 class MapScreen extends StatefulWidget {
   final ApplicationData? applicationData;
-  const MapScreen({super.key, this.applicationData});
+
+  const MapScreen({Key? key, this.applicationData}) : super(key: key);
 
   @override
   MapScreenState createState() => MapScreenState();
@@ -17,55 +21,34 @@ class MapScreen extends StatefulWidget {
 class MapScreenState extends State<MapScreen> {
   late GoogleMapController _controller;
   LatLng? _currentPosition;
-  final Location _location = Location();
+  LocationService location = LocationService();
+  Position? currentPosition;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    _requestLocationPermission();
-  }
-
-  Future<void> _requestLocationPermission() async {
-    ph.PermissionStatus status = await ph.Permission.location.request();
-    if (status.isGranted) {
-      _getCurrentLocation();
-    } else {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Location Permission Denied'),
-            content: const Text(
-                'Please enable location permission to use this feature.'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
-    }
+    _getCurrentLocation();
   }
 
   void _getCurrentLocation() async {
-    final locationData = await _location.getLocation();
+    final locationData = await location.getCurrentPosition();
     setState(() {
-      _currentPosition =
-          LatLng(locationData.latitude!, locationData.longitude!);
+      _currentPosition = LatLng(locationData.latitude, locationData.longitude);
+      _isLoading = false;
     });
   }
 
   void _onMapCreated(GoogleMapController controller) {
     _controller = controller;
+    setState(() {
+      _isLoading = false;
+    });
   }
 
-  void _onCameraMove(CameraPosition position) {
-    _currentPosition = position.target;
-  }
+  // void _onCameraMove(CameraPosition position) {
+  //   _currentPosition = position.target;
+  // }
 
   void _onMapTap(LatLng position) {
     setState(() {
@@ -77,43 +60,51 @@ class MapScreenState extends State<MapScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => RiskShowScreen(
-                currentPosition: _currentPosition!,
-                applicationData: widget.applicationData,
-              )),
+        builder: (context) => RiskShowScreen(
+          currentPosition: _currentPosition!,
+          applicationData: widget.applicationData,
+        ),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        if (_currentPosition != null)
-          GoogleMap(
-            onMapCreated: _onMapCreated,
-            initialCameraPosition:
-                CameraPosition(target: _currentPosition!, zoom: 15),
-            myLocationEnabled: true,
-            myLocationButtonEnabled: false,
-            onCameraMove: _onCameraMove,
-            onTap: _onMapTap,
-            markers: {
-              Marker(
-                  markerId: const MarkerId('current_position'),
-                  position: _currentPosition!)
-            },
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Select Location'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            child: _isLoading
+                ? Center(
+                    child: SpinKitDoubleBounce(
+                      color: Palette.kprimaryColor,
+                      size: 100.0,
+                    ),
+                  )
+                : MapWidget(
+                    currentPosition: _currentPosition,
+                    onMapCreated: _onMapCreated,
+                    onMapTap: _onMapTap,
+                  ),
           ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
+          Container(
             padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: _onSaveAndNext,
-              child: const Text('Save and next'),
+            child: ButtonWidget(
+              buttonText: 'Save Location',
+              buttonTriggerFunction: _onSaveAndNext,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
