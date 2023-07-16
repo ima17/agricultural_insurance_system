@@ -2,6 +2,7 @@ import 'package:agricultural_insurance_system/configs/palette.dart';
 import 'package:agricultural_insurance_system/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../services/location_service.dart';
 import '../services/weather_data_service.dart';
@@ -16,8 +17,8 @@ class LoadingScreen extends StatefulWidget {
 class LoadingScreenState extends State<LoadingScreen> {
   var weatherData;
   WeatherModel weatherModel = WeatherModel();
-  LocationData? locationData;
-  Location location = Location();
+  LocationService location = LocationService();
+  Position? currentPosition;
 
   @override
   void initState() {
@@ -26,7 +27,7 @@ class LoadingScreenState extends State<LoadingScreen> {
   }
 
   void fetchData() async {
-    locationData = await location.getCurrentPosition();
+    currentPosition = await location.getCurrentPosition();
     weatherData = await weatherModel.getLocationWeather();
 
     Navigator.push(
@@ -34,7 +35,6 @@ class LoadingScreenState extends State<LoadingScreen> {
       MaterialPageRoute(
           builder: (context) => HomeScreen(
                 weatherData: weatherData,
-                locationData: locationData,
               )),
     );
   }

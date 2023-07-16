@@ -1,4 +1,3 @@
-import 'package:agricultural_insurance_system/screens/recording_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../configs/palette.dart';

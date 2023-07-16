@@ -2,7 +2,6 @@ import 'package:agricultural_insurance_system/screens/recording_screen.dart';
 import 'package:agricultural_insurance_system/widgets/button_card.dart';
 import 'package:agricultural_insurance_system/widgets/home_screen_card.dart';
 import 'package:flutter/material.dart';
-import 'package:agricultural_insurance_system/services/location_service.dart';
 import 'package:intl/intl.dart';
 
 import '../services/weather_data_service.dart';
@@ -10,9 +9,8 @@ import '../widgets/top_container.dart';
 
 class HomeScreen extends StatefulWidget {
   final weatherData;
-  final LocationData? locationData;
   const HomeScreen(
-      {Key? key, required this.weatherData, required this.locationData})
+      {Key? key, required this.weatherData})
       : super(key: key);
 
   @override

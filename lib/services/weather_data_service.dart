@@ -1,4 +1,5 @@
 import 'package:agricultural_insurance_system/services/location_service.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../constants/constants.dart';
 import 'network_caller.dart';
@@ -12,13 +13,13 @@ class WeatherModel {
   // }
 
   Future<dynamic> getLocationWeather() async {
-    LocationData? locationData;
-    Location location = Location();
-    locationData = await location.getCurrentPosition();
+    Position? currentPosition;
+    LocationService location = LocationService();
+    currentPosition = await location.getCurrentPosition();
 
     NetworkCaller networkCaller = NetworkCaller(
         url:
-            "$kurl?lat=${locationData.position.latitude}&lon=${locationData.position.longitude}&appid=$kApiKey&units=metric");
+            "$kurl?lat=${currentPosition.latitude}&lon=${currentPosition.longitude}&appid=$kApiKey&units=metric");
 
     var currentWeatherData = await networkCaller.fetchWeatherData();
     return currentWeatherData;

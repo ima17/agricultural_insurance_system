@@ -1,16 +1,6 @@
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
-
-class LocationData {
-  String address;
-  Position position;
-
-  LocationData(this.address, this.position);
-}
-
-class Location {
-  String currentAddress = "";
+class LocationService {
   Position? currentPosition;
 
   Future<bool> _handleLocationPermission() async {
@@ -34,32 +24,18 @@ class Location {
     return true;
   }
 
-  Future<LocationData> getCurrentPosition() async {
+  Future<Position> getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
     if (!hasPermission) {
       throw Exception('Location permission not granted.');
     }
     try {
       Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-      currentPosition = position;
-      await _getAddressFromLatLng();
-      return LocationData(currentAddress, currentPosition!);
+      currentPosition = await position;
+      return currentPosition!;
     } catch (e) {
       print(e.toString());
       throw Exception('Failed to get current position.');
-    }
-  }
-
-  Future<void> _getAddressFromLatLng() async {
-    try {
-      List<Placemark> placemarks = await placemarkFromCoordinates(
-          currentPosition!.latitude, currentPosition!.longitude);
-      Placemark place = placemarks[0];
-      currentAddress =
-          '${place.street}, ${place.subLocality}, ${place.subAdministrativeArea}, ${place.postalCode}';
-    } catch (e) {
-      print(e.toString());
-      throw Exception('Failed to get address from coordinates.');
     }
   }
 }
