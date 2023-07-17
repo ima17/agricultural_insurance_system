@@ -51,6 +51,8 @@ class InputWidget extends StatefulWidget {
 }
 
 class _InputWidgetState extends State<InputWidget> {
+  String? errorText;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -84,16 +86,11 @@ class _InputWidgetState extends State<InputWidget> {
                 : Border.all(color: Palette.kInputBorderColor),
           ),
           child: TextFormField(
-            validator: (value) {
-              if (widget.isRequired && (value == null || value.isEmpty)) {
-                return widget.errorHint;
-              }
-              return null;
-            },
             onChanged: (value) {
               if (widget.inputTriggerFunction != null) {
                 widget.inputTriggerFunction!(value);
               }
+              validateInput(value);
             },
             initialValue:
                 (widget.initialText != null) ? widget.initialText : null,
@@ -131,6 +128,7 @@ class _InputWidgetState extends State<InputWidget> {
                 fontWeight: FontWeight.w400,
               ),
               floatingLabelBehavior: FloatingLabelBehavior.always,
+              errorText: errorText,
             ),
           ),
         ),
@@ -153,5 +151,17 @@ class _InputWidgetState extends State<InputWidget> {
             : const SizedBox.shrink(),
       ],
     );
+  }
+
+  void validateInput(String value) {
+    if (widget.isRequired && (value == null || value.isEmpty)) {
+      setState(() {
+        errorText = widget.errorHint;
+      });
+    } else {
+      setState(() {
+        errorText = null;
+      });
+    }
   }
 }
