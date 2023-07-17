@@ -9,13 +9,15 @@ class ButtonCard extends StatelessWidget {
   const ButtonCard({
     Key? key,
     required this.iconLink,
-    required this.label, required this.onTap,
+    required this.label,
+    required this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       child: SizedBox(
+        height: 220,
         child: Card(
           elevation: 20.0,
           shadowColor: Palette.kDropShadowColor.withOpacity(0.3),
