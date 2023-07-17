@@ -18,4 +18,5 @@ class Palette {
   static const kInputPlaceholderColor = Color(0xFF767676);
   static const kInputHintColor = Color(0xFF454545);
   static const kInvalidInputHintColor = Color(0xFFFF344C);
+  static const kInputLabelColor = Color(0xFF9097A3);
 }
