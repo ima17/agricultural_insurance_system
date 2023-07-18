@@ -80,31 +80,31 @@ class MapScreenState extends State<MapScreen> {
           },
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: _isLoading
-                ? Center(
-                    child: SpinKitDoubleBounce(
-                      color: Palette.kPrimaryColor,
-                      size: 100.0,
-                    ),
-                  )
-                : MapWidget(
+      body: _isLoading
+          ? Center(
+              child: SpinKitDoubleBounce(
+                color: Palette.kPrimaryColor,
+                size: 100.0,
+              ),
+            )
+          : Column(
+              children: [
+                Expanded(
+                  child: MapWidget(
                     currentPosition: _currentPosition,
                     onMapCreated: _onMapCreated,
                     onMapTap: _onMapTap,
                   ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(16.0),
-            child: ButtonWidget(
-              buttonText: 'Save Location',
-              buttonTriggerFunction: _onSaveAndNext,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  child: ButtonWidget(
+                    buttonText: 'Save Location',
+                    buttonTriggerFunction: _onSaveAndNext,
+                  ),
+                ),
+              ],
             ),
-          ),
-        ],
-      ),
     );
   }
 }
