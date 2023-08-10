@@ -4,6 +4,8 @@ import 'package:agricultural_insurance_system/utils/form_utils.dart';
 import 'package:agricultural_insurance_system/widgets/button_widget.dart';
 import 'package:agricultural_insurance_system/widgets/input_widget.dart';
 
+import '../widgets/custom_app_bar.dart';
+
 class ApplicationScreen extends StatefulWidget {
   final ApplicationData? applicationData;
 
@@ -21,15 +23,13 @@ class _ApplicationScreenState extends State<ApplicationScreen> {
   @override
   void initState() {
     super.initState();
-    _nameController.text = widget.applicationData!.name ?? '';
+    _nameController.text = widget.applicationData!.name;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Application Form'),
-      ),
+      appBar: CustomAppBar(elevation: 0, title: 'Application Form'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

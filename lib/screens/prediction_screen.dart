@@ -10,6 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../services/prediction_service.dart';
 import '../widgets/button_widget.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/loading_widget.dart';
 
 class PredictionScreen extends StatefulWidget {
@@ -56,9 +57,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
   Widget build(BuildContext context) {
     return !isLoading
         ? Scaffold(
-            appBar: AppBar(
-              title: const Text('Predicted Premium'),
-            ),
+            appBar: CustomAppBar(elevation: 0, title: 'Predicted Preemium'),
             body: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(

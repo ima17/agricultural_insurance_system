@@ -9,6 +9,8 @@ import 'package:flutter_sound/flutter_sound.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 
+import '../widgets/custom_app_bar.dart';
+
 class RecordingScreen extends StatefulWidget {
   const RecordingScreen({Key? key}) : super(key: key);
 
@@ -22,9 +24,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Record the Voice'),
-      ),
+      appBar: CustomAppBar(elevation: 0, title: 'Record the Audio'),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -6,6 +6,7 @@ import '../models/district_data.dart';
 import '../models/flood_risk_data.dart';
 import '../models/prediction_data.dart';
 import '../models/whether_risk_data.dart';
+import '../widgets/custom_app_bar.dart';
 import 'recording_screen.dart';
 
 class ResultScreen extends StatefulWidget {
@@ -67,9 +68,7 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Result'),
-      ),
+      appBar: CustomAppBar(elevation: 0, title: 'Results'),
       body: Column(
         children: [
           Expanded(

@@ -1,3 +1,4 @@
+import 'package:agricultural_insurance_system/widgets/custom_app_bar.dart';
 import 'package:agricultural_insurance_system/widgets/loading_widget.dart';
 import 'package:agricultural_insurance_system/widgets/location_card.dart';
 import 'package:flutter/material.dart';
@@ -60,9 +61,7 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
   Widget build(BuildContext context) {
     return !isLoading
         ? Scaffold(
-            appBar: AppBar(
-              title: const Text('Risk Details'),
-            ),
+            appBar: CustomAppBar(elevation: 0, title: 'Risk Details'),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
               child: ListView(

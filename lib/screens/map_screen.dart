@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../configs/palette.dart';
 import '../services/location_service.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/map_widget.dart';
 
 class MapScreen extends StatefulWidget {
@@ -71,15 +72,7 @@ class MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Select Location'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+      appBar: CustomAppBar(elevation: 0, title: 'Select Location'),
       body: _isLoading
           ? Center(
               child: SpinKitDoubleBounce(
