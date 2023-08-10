@@ -1,3 +1,4 @@
+import 'package:agricultural_insurance_system/widgets/loading_widget.dart';
 import 'package:agricultural_insurance_system/widgets/location_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -9,7 +10,6 @@ import 'package:agricultural_insurance_system/models/flood_risk_data.dart';
 import 'package:agricultural_insurance_system/models/whether_risk_data.dart';
 import 'package:agricultural_insurance_system/screens/prediction_screen.dart';
 import 'package:agricultural_insurance_system/widgets/risk_card.dart';
-import 'package:agricultural_insurance_system/constants/url_links.dart';
 import 'package:agricultural_insurance_system/services/risk_calculate_service.dart';
 
 import '../configs/palette.dart';
@@ -58,101 +58,87 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
   get weatherRisk => weatherRiskData?.weatherRisk;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Risk Details'),
-      ),
-      body: Center(
-        child: isLoading
-            ? Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+    return !isLoading
+        ? Scaffold(
+            appBar: AppBar(
+              title: const Text('Risk Details'),
+            ),
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView(
                 children: [
-                  SpinKitDoubleBounce(
-                    color: Palette.kPrimaryColor,
-                    size: 100.0,
+                  Text(
+                    'Location Details',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: LocationCard(
+                            title: 'District',
+                            subTitle: districtData!.district,
+                            icon: FontAwesomeIcons.city),
+                      ),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: LocationCard(
+                          title: 'GND',
+                          subTitle: districtData!.gnd,
+                          icon: FontAwesomeIcons.locationPin,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 18),
+                  Divider(
+                    color: Palette.kPrimaryColor,
+                  ),
+                  SizedBox(height: 18),
                   Text(
-                    'Calculating Risks',
-                    style: TextStyle(fontSize: 16),
+                    'Risks Details',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 16),
+                  RiskCard(
+                    title: "Flood Risk",
+                    icon: FontAwesomeIcons.houseFloodWater,
+                    riskLevel: 'High',
+                  ),
+                  SizedBox(height: 10),
+                  RiskCard(
+                    title: "Weather Risk",
+                    icon: FontAwesomeIcons.cloudShowersWater,
+                    riskLevel: 'No',
+                  ),
+                  SizedBox(
+                    height: 40,
+                  ),
+                  Container(
+                    // padding: const EdgeInsets.all(16.0),
+                    child: ButtonWidget(
+                      buttonText: 'Save and Next',
+                      buttonTriggerFunction: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PredictionScreen(
+                              applicationData: widget.applicationData,
+                              districtData: districtData,
+                              weatherRiskData: weatherRiskData,
+                              floodRiskData: floodRiskData,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ],
-              )
-            : Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Location Details',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 16),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: LocationCard(
-                              title: 'District',
-                              subTitle: districtData!.district,
-                              icon: FontAwesomeIcons.city),
-                        ),
-                        SizedBox(width: 16),
-                        Expanded(
-                          child: LocationCard(
-                            title: 'GND',
-                            subTitle: districtData!.gnd,
-                            icon: FontAwesomeIcons.locationPin,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 18),
-                    Divider(
-                      color: Palette.kPrimaryColor,
-                    ),
-                    SizedBox(height: 18),
-                    Text(
-                      'Risks Details',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 16),
-                    RiskCard(
-                      title: "Flood Risk",
-                      icon: FontAwesomeIcons.houseFloodWater,
-                      riskLevel: 'High',
-                    ),
-                    SizedBox(height: 10),
-                    RiskCard(
-                      title: "Weather Risk",
-                      icon: FontAwesomeIcons.cloudShowersWater,
-                      riskLevel: 'No',
-                    ),
-                    Spacer(),
-                    Container(
-                      // padding: const EdgeInsets.all(16.0),
-                      child: ButtonWidget(
-                        buttonText: 'Save and Next',
-                        buttonTriggerFunction: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => PredictionScreen(
-                                applicationData: widget.applicationData,
-                                districtData: districtData,
-                                weatherRiskData: weatherRiskData,
-                                floodRiskData: floodRiskData,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
               ),
-      ),
-    );
+            ),
+          )
+        : LoadingWidget(
+            text: "Calculating Risks",
+          );
   }
 }
