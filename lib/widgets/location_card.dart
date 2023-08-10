@@ -27,13 +27,18 @@ class LocationCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Material(
+              Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 20.0, vertical: 20.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Palette.kPrimaryColor,
+                ),
                 child: Icon(
                   icon,
                   size: 30,
-                  color: Palette.kPrimaryColor,
+                  color: Palette.kLightWhiteColor,
                 ),
-                color: Colors.transparent,
               ),
               SizedBox(
                 height: 10,
