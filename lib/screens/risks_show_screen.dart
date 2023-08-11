@@ -2,7 +2,6 @@ import 'package:agricultural_insurance_system/widgets/custom_app_bar.dart';
 import 'package:agricultural_insurance_system/widgets/loading_widget.dart';
 import 'package:agricultural_insurance_system/widgets/location_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:agricultural_insurance_system/models/application_data.dart';
@@ -36,6 +35,7 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
   FloodRiskData? floodRiskData;
   WeatherRiskData? weatherRiskData;
   bool isLoading = true;
+
   @override
   void initState() {
     super.initState();
@@ -57,64 +57,74 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
 
   get floodRisk => floodRiskData?.floodRisk;
   get weatherRisk => weatherRiskData?.weatherRisk;
+
   @override
   Widget build(BuildContext context) {
     return !isLoading
         ? Scaffold(
             appBar: CustomAppBar(elevation: 0, title: 'Risk Details'),
-            body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: ListView(
-                children: [
-                  Text(
-                    'Location Details',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: LocationCard(
-                            title: 'District',
-                            subTitle: districtData!.district,
-                            icon: FontAwesomeIcons.city),
-                      ),
-                      SizedBox(width: 16),
-                      Expanded(
-                        child: LocationCard(
-                          title: 'GND',
-                          subTitle: districtData!.gnd,
-                          icon: FontAwesomeIcons.locationPin,
+            body: Column(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ListView(
+                      children: [
+                        Text(
+                          'Location Details',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         ),
-                      ),
-                    ],
+                        SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: LocationCard(
+                                title: 'District',
+                                subTitle: districtData!.district,
+                                icon: FontAwesomeIcons.mapLocationDot,
+                              ),
+                            ),
+                            SizedBox(width: 16),
+                            Expanded(
+                              child: LocationCard(
+                                title: 'GND',
+                                subTitle: districtData!.gnd,
+                                icon: FontAwesomeIcons.locationDot,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 18),
+                        Divider(
+                          color: Palette.kPrimaryColor,
+                        ),
+                        SizedBox(height: 18),
+                        Text(
+                          'Risks Details',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(height: 16),
+                        RiskCard(
+                          title: "Flood Risk",
+                          icon: FontAwesomeIcons.houseFloodWater,
+                          riskLevel: 'High',
+                        ),
+                        SizedBox(height: 10),
+                        RiskCard(
+                          title: "Weather Risk",
+                          icon: FontAwesomeIcons.cloudShowersWater,
+                          riskLevel: 'No',
+                        ),
+                      ],
+                    ),
                   ),
-                  SizedBox(height: 18),
-                  Divider(
-                    color: Palette.kPrimaryColor,
-                  ),
-                  SizedBox(height: 18),
-                  Text(
-                    'Risks Details',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 16),
-                  RiskCard(
-                    title: "Flood Risk",
-                    icon: FontAwesomeIcons.houseFloodWater,
-                    riskLevel: 'High',
-                  ),
-                  SizedBox(height: 10),
-                  RiskCard(
-                    title: "Weather Risk",
-                    icon: FontAwesomeIcons.cloudShowersWater,
-                    riskLevel: 'No',
-                  ),
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                    // padding: const EdgeInsets.all(16.0),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
                     child: ButtonWidget(
                       buttonText: 'Save and Next',
                       buttonTriggerFunction: () {
@@ -132,8 +142,8 @@ class _RiskShowScreenState extends State<RiskShowScreen> {
                       },
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           )
         : LoadingWidget(
