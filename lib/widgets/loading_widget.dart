@@ -23,6 +23,7 @@ class LoadingWidget extends StatelessWidget {
           SizedBox(height: 16),
           Text(
             text!,
+            style: TextStyle(fontSize: 12),
           ),
         ],
       ),
