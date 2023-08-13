@@ -102,8 +102,10 @@ class _RecordingScreenState extends State<RecordingScreen> {
                   ),
                   Text(
                     formattedDuration,
-                    style:
-                        TextStyle(fontSize: 36, color: Palette.kPrimaryColor),
+                    style: TextStyle(
+                        fontSize: 36,
+                        color: Palette.kPrimaryColor,
+                        fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
                   ButtonWidget(
