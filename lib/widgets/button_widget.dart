@@ -26,7 +26,7 @@ class ButtonWidget extends StatelessWidget {
       child: Material(
         child: InkWell(
           onTap: () {
-            if (buttonTriggerFunction != null) {
+            if (isDisabled == false && buttonTriggerFunction != null) {
               buttonTriggerFunction!();
             }
           },
@@ -34,7 +34,7 @@ class ButtonWidget extends StatelessWidget {
             height: 50.0,
             width: double.infinity,
             padding: const EdgeInsets.symmetric(
-              vertical: 10.0, 
+              vertical: 10.0,
               horizontal: 20.0,
             ),
             child: Row(
@@ -62,7 +62,7 @@ class ButtonWidget extends StatelessWidget {
         color: Colors.transparent,
       ),
       decoration: BoxDecoration(
-        color: buttonBGColor,
+        color: isDisabled ? Colors.grey : buttonBGColor,
         borderRadius: BorderRadius.circular(4.0),
         boxShadow: [
           BoxShadow(
