@@ -1,4 +1,4 @@
-import 'package:agricultural_insurance_system/screens/loading_screen.dart';
+import 'package:agricultural_insurance_system/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'configs/palette.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
         ),
         // useMaterial3: true,
       ),
-      home: const LoadingScreen(),
+      home: const LoginScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
