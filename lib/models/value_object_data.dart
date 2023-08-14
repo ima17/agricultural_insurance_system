@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class ValueObject {
   final String title;
   final String value;
-  final IconData icon;
+  final IconData? icon;
 
   ValueObject({
     required this.title,
     required this.value,
-    required this.icon,
+    this.icon,
   });
 
   factory ValueObject.fromJson(Map<String, dynamic> json) {
@@ -23,7 +23,7 @@ class ValueObject {
     return {
       'title': title,
       'value': value,
-      'icon': icon.codePoint,
+      'icon': icon!.codePoint,
     };
   }
 }
