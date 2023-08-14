@@ -4,11 +4,13 @@ class ValueObject {
   final String title;
   final String value;
   final IconData? icon;
+  final List<ValueObject>? originalObject;
 
   ValueObject({
     required this.title,
     required this.value,
     this.icon,
+    this.originalObject
   });
 
   factory ValueObject.fromJson(Map<String, dynamic> json) {
