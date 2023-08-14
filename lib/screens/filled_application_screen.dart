@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:agricultural_insurance_system/configs/palette.dart';
 import 'package:agricultural_insurance_system/widgets/custom_app_bar.dart';
 import 'package:agricultural_insurance_system/widgets/filled_application_card.dart';
+import 'package:agricultural_insurance_system/widgets/input_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,6 +20,8 @@ class FilledApplicationScreen extends StatefulWidget {
 
 class _FilledApplicationScreenState extends State<FilledApplicationScreen> {
   List<ValueObject> values = [];
+  List<ValueObject> filteredValues = [];
+  String searchQuery = '';
 
   @override
   void initState() {
@@ -28,13 +32,9 @@ class _FilledApplicationScreenState extends State<FilledApplicationScreen> {
   Future<void> retrieveValues() async {
     final prefs = await SharedPreferences.getInstance();
 
-    // Get all the keys in the local storage
     final keys = prefs.getKeys();
-
-    // Filter the keys to get the ones that start with 'values_'
     final applicationKeys = keys.where((key) => key.startsWith('values_'));
 
-    // Retrieve the Policy Number and Name for each relevant application
     values = [];
     for (final key in applicationKeys) {
       final jsonString = prefs.getString(key);
@@ -44,7 +44,6 @@ class _FilledApplicationScreenState extends State<FilledApplicationScreen> {
             .map((jsonValue) => ValueObject.fromJson(jsonValue))
             .toList();
 
-        // Find the ValueObject with the Policy Number and Name
         final policyNumberValue = applicationValues.firstWhere(
           (value) => value.title == 'Policy Number',
           orElse: () => ValueObject(title: '', value: ''),
@@ -54,18 +53,31 @@ class _FilledApplicationScreenState extends State<FilledApplicationScreen> {
           orElse: () => ValueObject(title: '', value: ''),
         );
 
-        // Create a new ValueObject with the Policy Number and Name
         final cardValue = ValueObject(
           title: policyNumberValue.value,
           value: nameValue.value,
-          icon: FontAwesomeIcons.hashtag, // Use an appropriate icon
+          icon: FontAwesomeIcons.hashtag,
+          originalObject: applicationValues,
         );
 
         values.add(cardValue);
       }
     }
 
+    // Initialize filteredValues with all values
+    filteredValues = List.from(values);
+
     setState(() {});
+  }
+
+  void filterValues() {
+    filteredValues = values.where((valueObject) {
+      final title = valueObject.title.toLowerCase();
+      final value = valueObject.value.toLowerCase();
+      final query = searchQuery.toLowerCase();
+
+      return title.contains(query) || value.contains(query);
+    }).toList();
   }
 
   @override
@@ -77,20 +89,35 @@ class _FilledApplicationScreenState extends State<FilledApplicationScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: ListView.builder(
-          itemCount: values.length,
-          itemBuilder: (context, index) {
-            final value = values[index];
-            return FilledApplicationCard(
-                policyNumber: value.title, name: value.value);
-          },
+        child: Column(
+          children: [
+            InputWidget(
+              inputPlaceholder: 'Search',
+              trailingIcon: Icon(
+                FontAwesomeIcons.magnifyingGlass,
+                size: 15,
+                color: Palette.kPrimaryColor,
+              ),
+              inputTriggerFunction: (value) {
+                setState(() {
+                  searchQuery = value;
+                  filterValues();
+                });
+              },
+            ),
+            SizedBox(height: 16),
+            Expanded(
+              child: ListView.builder(
+                itemCount: filteredValues.length,
+                itemBuilder: (context, index) {
+                  final valueObject = filteredValues[index];
+                  return FilledApplicationCard(valueObject: valueObject);
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-// IconData iconDataFromString(String iconString) {
-//   int codePoint = int.parse(iconString, radix: 16);
-//   return IconData(codePoint, fontFamily: 'FontAwesome');
-// }

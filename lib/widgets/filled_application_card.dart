@@ -1,21 +1,22 @@
+import 'package:agricultural_insurance_system/screens/view_application_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../configs/palette.dart';
 import '../constants/theme_constants.dart';
+import '../models/value_object_data.dart';
 
 class FilledApplicationCard extends StatelessWidget {
-  final String policyNumber;
-  final String name;
+  final ValueObject valueObject;
 
   const FilledApplicationCard({
-    required this.policyNumber,
-    required this.name,
+    required this.valueObject,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return GestureDetector(
+      child: Card(
         elevation: 20.0,
         shadowColor: Palette.kDropShadowColor.withOpacity(0.3),
         shape: RoundedRectangleBorder(
@@ -24,12 +25,9 @@ class FilledApplicationCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     width: 80,
@@ -41,7 +39,7 @@ class FilledApplicationCard extends StatelessWidget {
                     ),
                     child: Center(
                       child: Text(
-                        policyNumber,
+                        valueObject.title,
                         style: TextStyle(
                           fontSize: 12,
                           color: Palette.kLightWhiteColor,
@@ -54,7 +52,7 @@ class FilledApplicationCard extends StatelessWidget {
                     height: 5,
                   ),
                   Text(
-                    "Customer : $name",
+                    "Customer : ${valueObject.value}",
                     style: const TextStyle(
                       fontSize: 12,
                       color: Palette.kHeadingColor,
@@ -71,6 +69,19 @@ class FilledApplicationCard extends StatelessWidget {
               ),
             ],
           ),
-        ));
+        ),
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (BuildContext context) => ViewApplicationScreen(
+              policyNo: valueObject.title,
+              valueObject: valueObject.originalObject,
+            ),
+          ),
+        );
+      },
+    );
   }
 }
