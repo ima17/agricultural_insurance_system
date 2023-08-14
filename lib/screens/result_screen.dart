@@ -162,7 +162,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     final icon = values[index].icon;
 
                     return InfoCard(
-                      icon: icon,
+                      icon: icon!,
                       infoTitle: title,
                       info: value,
                     );
@@ -173,14 +173,17 @@ class _ResultScreenState extends State<ResultScreen> {
             ButtonWidget(
               buttonText: "Save and Return to Home",
               buttonTriggerFunction: () async {
-                final jsonValues =
+                final jsonValue =
                     values.map((value) => value.toJson()).toList();
-                final jsonString = jsonEncode(jsonValues);
+                final jsonString = jsonEncode(jsonValue);
 
-                // Save the JSON string to local storage
-                // Example using shared_preferences package:
+                // Generate a unique identifier for the current application
+                final uniqueId =
+                    DateTime.now().millisecondsSinceEpoch.toString();
+
+                // Save the JSON string to local storage with the unique identifier
                 final prefs = await SharedPreferences.getInstance();
-                await prefs.setString('values', jsonString);
+                await prefs.setString('values_$uniqueId', jsonString);
 
                 Navigator.pushAndRemoveUntil(
                   context,
