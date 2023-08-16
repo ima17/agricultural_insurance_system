@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 class ValueObject {
   final String title;
   final String value;
-  final IconData? icon;
+  final  IconData icon;
   final List<ValueObject>? originalObject;
 
   ValueObject({
     required this.title,
     required this.value,
-    this.icon,
+    required this.icon,
     this.originalObject
   });
 
