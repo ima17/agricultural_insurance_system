@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "303714899876",
+    "project_id": "agricuture-insurance-system",
+    "storage_bucket": "agricuture-insurance-system.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:303714899876:android:3ba8e413cf2eb9881a5331",
+        "android_client_info": {
+          "package_name": "com.imantha.agricultural_insurance_system"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "303714899876-ojhuii2i124v77k8rvm1osjn2jes33cm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAl3i1fbT33BAdKdekrxMuuYP6Miu-ull0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "303714899876-ojhuii2i124v77k8rvm1osjn2jes33cm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
