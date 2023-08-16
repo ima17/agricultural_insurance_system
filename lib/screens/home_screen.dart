@@ -2,6 +2,7 @@ import 'package:agricultural_insurance_system/screens/filled_application_screen.
 import 'package:agricultural_insurance_system/screens/recording_screen.dart';
 import 'package:agricultural_insurance_system/widgets/button_card.dart';
 import 'package:agricultural_insurance_system/widgets/home_screen_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -21,13 +22,18 @@ class _HomeScreenState extends State<HomeScreen> {
   int? tempreture;
   String? cityName;
   String? weatherIcon;
+  String? name;
   WeatherModel weather = WeatherModel();
+  final _auth = FirebaseAuth.instance;
+
+  late User loggedInUser;
 
   @override
   void initState() {
     super.initState();
     getDateTime();
     updateUIData(widget.weatherData);
+    getCurrentUser();
   }
 
   void getDateTime() {
@@ -50,12 +56,28 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        setState(() {
+          name = user.displayName;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          TopContainer(),
+          TopContainer(
+            name: name!,
+          ),
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
