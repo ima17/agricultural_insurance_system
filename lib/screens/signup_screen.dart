@@ -46,7 +46,9 @@ class _SignupScreenState extends State<SignupScreen> {
     Size size = MediaQuery.of(context).size;
 
     return isLoading
-        ? LoadingWidget()
+        ? LoadingWidget(
+            text: "Signing In",
+          )
         : Container(
             height: MediaQuery.of(context).size.height +
                 MediaQuery.of(context).viewInsets.bottom,

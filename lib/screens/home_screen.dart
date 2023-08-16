@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           TopContainer(
-            name: name!,
+            name: name ?? "User",
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),

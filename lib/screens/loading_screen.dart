@@ -30,7 +30,7 @@ class LoadingScreenState extends State<LoadingScreen> {
     currentPosition = await location.getCurrentPosition();
     weatherData = await weatherModel.getLocationWeather();
 
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
           builder: (context) => HomeScreen(
