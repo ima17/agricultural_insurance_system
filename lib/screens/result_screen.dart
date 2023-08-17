@@ -1,12 +1,12 @@
-import 'dart:convert';
-
 import 'package:agricultural_insurance_system/screens/home_screen.dart';
 import 'package:agricultural_insurance_system/widgets/button_widget.dart';
 import 'package:agricultural_insurance_system/widgets/info_card.dart';
+import 'package:agricultural_insurance_system/widgets/toast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:faker/faker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/application_data.dart';
 import '../models/district_data.dart';
@@ -37,6 +37,8 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
+  final _auth = FirebaseAuth.instance;
+  final _fireStore = FirebaseFirestore.instance;
   late String policyNumber;
 
   List<ValueObject> values = [];
@@ -162,7 +164,7 @@ class _ResultScreenState extends State<ResultScreen> {
                     final icon = values[index].icon;
 
                     return InfoCard(
-                      icon: icon!,
+                      icon: icon,
                       infoTitle: title,
                       info: value,
                     );
@@ -173,23 +175,31 @@ class _ResultScreenState extends State<ResultScreen> {
             ButtonWidget(
               buttonText: "Save and Return to Home",
               buttonTriggerFunction: () async {
-                final jsonValue =
-                    values.map((value) => value.toJson()).toList();
-                final jsonString = jsonEncode(jsonValue);
+                try {
+                  final jsonValue =
+                      values.map((value) => value.toJson()).toList();
 
-                // Generate a unique identifier for the current application
-                final uniqueId =
-                    DateTime.now().millisecondsSinceEpoch.toString();
+                  final uniqueId =
+                      DateTime.now().millisecondsSinceEpoch.toString();
 
-                // Save the JSON string to local storage with the unique identifier
-                final prefs = await SharedPreferences.getInstance();
-                await prefs.setString('values_$uniqueId', jsonString);
+                  await _fireStore
+                      .collection('applications')
+                      .doc(uniqueId)
+                      .set({
+                    'email': _auth.currentUser!.email,
+                    'application': jsonValue,
+                  });
 
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                  (route) => false,
-                );
+                  ToastBottomSuccess("Application saved successfully");
+
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => HomeScreen()),
+                    (route) => false,
+                  );
+                } catch (e) {
+                  ToastBottomError("Something went wrong");
+                }
               },
             )
           ],
