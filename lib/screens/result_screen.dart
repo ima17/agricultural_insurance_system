@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:agricultural_insurance_system/screens/loading_screen.dart';
+import 'package:agricultural_insurance_system/screens/home_screen.dart';
 import 'package:agricultural_insurance_system/widgets/button_widget.dart';
 import 'package:agricultural_insurance_system/widgets/info_card.dart';
 import 'package:flutter/material.dart';
@@ -187,7 +187,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => LoadingScreen()),
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
                   (route) => false,
                 );
               },

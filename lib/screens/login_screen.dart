@@ -1,4 +1,4 @@
-import 'package:agricultural_insurance_system/screens/loading_screen.dart';
+import 'package:agricultural_insurance_system/screens/home_screen.dart';
 import 'package:agricultural_insurance_system/screens/signup_screen.dart';
 import 'package:agricultural_insurance_system/widgets/loading_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -178,7 +178,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         context,
                                         MaterialPageRoute<void>(
                                           builder: (BuildContext context) =>
-                                              const LoadingScreen(),
+                                              const HomeScreen(),
                                         ),
                                       );
                                     } catch (e) {
