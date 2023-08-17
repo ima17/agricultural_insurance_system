@@ -2,6 +2,7 @@ import 'package:agricultural_insurance_system/screens/filled_application_screen.
 import 'package:agricultural_insurance_system/screens/recording_screen.dart';
 import 'package:agricultural_insurance_system/widgets/button_card.dart';
 import 'package:agricultural_insurance_system/widgets/home_screen_card.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -23,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String? cityName;
   String? weatherIcon;
   String? name;
+  final _fireStore = FirebaseFirestore.instance;
   WeatherModel weather = WeatherModel();
   final _auth = FirebaseAuth.instance;
 
@@ -58,12 +60,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void getCurrentUser() async {
     try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedInUser = user;
-        setState(() {
-          name = user.displayName;
-        });
+      final userEmail = _auth.currentUser!.email;
+      if (userEmail != null) {
+        final QuerySnapshot snapshot = await _fireStore
+            .collection('users')
+            .where('userEmail', isEqualTo: userEmail)
+            .get();
+
+        if (snapshot.docs.isNotEmpty) {
+          final userData = snapshot.docs[0].data() as Map<String, dynamic>;
+          setState(() {
+            name = userData['userName'];
+          });
+        }
       }
     } catch (e) {
       print(e);
@@ -76,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Stack(
         children: [
           TopContainer(
-            name: name ?? "User",
+            name: name ?? "",
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
