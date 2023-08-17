@@ -174,6 +174,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         email: emailController.text,
                                         password: passwordController.text,
                                       );
+
+                                      ToastBottomSuccess(
+                                          "Logged in successfully");
+
                                       Navigator.pushReplacement<void, void>(
                                         context,
                                         MaterialPageRoute<void>(
