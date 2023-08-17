@@ -1,6 +1,7 @@
 import 'package:agricultural_insurance_system/screens/loading_screen.dart';
 import 'package:agricultural_insurance_system/screens/login_screen.dart';
 import 'package:agricultural_insurance_system/widgets/loading_widget.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +20,7 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen> {
   final _auth = FirebaseAuth.instance;
+  final _fireStore = FirebaseFirestore.instance;
   bool _isFirstNameInputError = false,
       _isLastNameInputError = false,
       _isEmailInputError = false,
@@ -298,8 +300,13 @@ class _SignupScreenState extends State<SignupScreen> {
 
                                       // Update the user's display name
                                       if (user != null) {
-                                        await user.updateDisplayName(
-                                            "${firstNameController.text} ${lastNameController.text}");
+                                        await _fireStore
+                                            .collection('users')
+                                            .add({
+                                          'userEmail': user.email,
+                                          'userName':
+                                              "${firstNameController.text} ${lastNameController.text}",
+                                        });
                                       }
 
                                       Navigator.pushReplacement<void, void>(
