@@ -11,6 +11,8 @@ class Palette {
   static const kLightWhiteColor = Color(0xFFFFFFFF);
   static const kHeadingColor = Color(0xFF515C6F);
   static const kBackgroundColor = Color(0xFFF0F2F6);
+  static const kWarningBackground = Color.fromARGB(255, 255, 205, 210);
+  static const kWarningColor = Color.fromARGB(255, 213, 0, 0);
 
   //input fields
   static const kInputBGColor = Color(0xFFF5F6F9);

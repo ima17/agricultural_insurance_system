@@ -8,6 +8,7 @@ import '../configs/palette.dart';
 import '../utils/validator.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/input_widget.dart';
+import '../widgets/toast.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -313,7 +314,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                         isLoading = false;
                                       });
 
-                                      print(e);
+                                      ToastBottomError('Something went wrong');
                                     }
                                   }
                                 },

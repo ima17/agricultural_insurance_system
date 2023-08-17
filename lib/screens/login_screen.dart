@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../configs/palette.dart';
 import '../widgets/button_widget.dart';
 import '../widgets/input_widget.dart';
+import '../widgets/toast.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -181,9 +182,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ),
                                       );
                                     } catch (e) {
+                                      print(e);
                                       setState(() {
                                         isLoading = false;
                                       });
+
                                       if (e is FirebaseAuthException) {
                                         if (e.code == 'wrong-password') {
                                           setState(() {
@@ -191,20 +194,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 "Wrong Password";
                                             _passwordInputError = true;
                                           });
+                                          ToastBottomError(
+                                              'Error picking image');
                                         } else if (e.code == 'invalid-email') {
                                           setState(() {
                                             _emailAddressErrorHint =
                                                 "Invalid Email";
                                             _emailAddressInputError = true;
                                           });
+                                        } else if (e.code == "user-not-found") {
+                                          setState(() {
+                                            _emailAddressErrorHint =
+                                                "User not found";
+                                            _emailAddressInputError = true;
+                                          });
                                         } else {
-                                          print(
-                                              "An error occurred: ${e.message}");
-                                          // Handle other errors if needed.
+                                          ToastBottomError(
+                                              'Something went wrong');
                                         }
                                       } else {
-                                        print(
-                                            "An unexpected error occurred: $e");
+                                        ToastBottomError(
+                                            'Something went wrong');
                                       }
                                     }
                                   }
