@@ -1,9 +1,6 @@
-import 'package:agricultural_insurance_system/configs/palette.dart';
 import 'package:agricultural_insurance_system/screens/filled_application_screen.dart';
-import 'package:agricultural_insurance_system/screens/login_screen.dart';
 import 'package:agricultural_insurance_system/screens/recording_screen.dart';
 import 'package:agricultural_insurance_system/widgets/button_card.dart';
-import 'package:agricultural_insurance_system/widgets/button_widget.dart';
 import 'package:agricultural_insurance_system/widgets/home_screen_card.dart';
 import 'package:agricultural_insurance_system/widgets/loading_widget.dart';
 import 'package:agricultural_insurance_system/widgets/toast.dart';
@@ -159,21 +156,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ],
-                      ),
-                      Spacer(),
-                      ButtonWidget(
-                        buttonTextColor: Palette.kDarkBlackColor,
-                        buttonBGColor: Palette.kLightWhiteColor,
-                        buttonText: "Sign Out",
-                        buttonTriggerFunction: () async {
-                          await _auth.signOut();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => LoginScreen(),
-                            ),
-                          );
-                        },
                       ),
                     ],
                   ),
