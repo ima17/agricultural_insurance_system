@@ -198,8 +198,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 "Wrong Password";
                                             _passwordInputError = true;
                                           });
-                                          ToastBottomError(
-                                              'Error picking image');
                                         } else if (e.code == 'invalid-email') {
                                           setState(() {
                                             _emailAddressErrorHint =
