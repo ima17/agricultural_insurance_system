@@ -125,18 +125,24 @@ class _FilledApplicationScreenState extends State<FilledApplicationScreen> {
                     },
                   ),
                   SizedBox(height: 20.0),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: filteredValues.length,
-                      itemBuilder: (context, index) {
-                        final valueObject = filteredValues[index];
+                  filteredValues.isEmpty
+                      ? Text(
+                          'No filled Applications yet. ',
+                          style: TextStyle(
+                              fontSize: 12.0, color: Palette.kHeadingColor),
+                        )
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: filteredValues.length,
+                            itemBuilder: (context, index) {
+                              final valueObject = filteredValues[index];
 
-                        return FilledApplicationCard(
-                          valueObject: valueObject,
-                        );
-                      },
-                    ),
-                  ),
+                              return FilledApplicationCard(
+                                valueObject: valueObject,
+                              );
+                            },
+                          ),
+                        ),
                 ],
               ),
             ),
