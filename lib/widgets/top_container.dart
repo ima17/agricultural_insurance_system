@@ -6,9 +6,11 @@ import '../configs/palette.dart';
 
 class TopContainer extends StatelessWidget {
   final String? name;
+  final String? imageUrl;
   const TopContainer({
     Key? key,
     required this.name,
+    this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -61,9 +63,9 @@ class TopContainer extends StatelessWidget {
                 ),
                 GestureDetector(
                   child: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://cdn.pixabay.com/photo/2022/09/08/15/16/cute-7441224_1280.jpg',
-                    ),
+                    backgroundImage: imageUrl != null
+                        ? NetworkImage(imageUrl!) as ImageProvider<Object>?
+                        : const AssetImage('assets/images/user.png'),
                   ),
                   onTap: () {
                     Navigator.push(

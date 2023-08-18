@@ -34,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String weatherIcon = "";
   String name = "";
   bool isLoading = true;
+  String? imageUrl;
 
   late User loggedInUser;
 
@@ -46,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
       getCurrentUser(),
       fetchData(),
       getDateTime(),
+      fetchProfileImage(),
     ]).then((_) {
       setState(() {
         isLoading = false;
@@ -97,6 +99,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> fetchProfileImage() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        final userData =
+            await _fireStore.collection('users').doc(user.uid).get();
+        final data = userData.data();
+        if (data != null && data.containsKey('imageUrl')) {
+          setState(() {
+            imageUrl = data['imageUrl'];
+          });
+        }
+      }
+    } catch (e) {
+      ToastBottomError('Something went wrong');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -106,6 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 TopContainer(
                   name: name,
+                  imageUrl: imageUrl ?? imageUrl,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
