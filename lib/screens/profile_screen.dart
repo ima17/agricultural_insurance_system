@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:agricultural_insurance_system/screens/home_screen.dart';
 import 'package:agricultural_insurance_system/widgets/loading_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -142,7 +143,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       children: [
                         InkWell(
                           onTap: () {
-                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (BuildContext context) => HomeScreen(),
+                              ),
+                            );
                           },
                           child: const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -209,13 +215,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     SizedBox(
                       height: 8,
                     ),
-                    Text(
-                      _auth.currentUser!.email ?? "",
-                      style: const TextStyle(
-                        color: Palette.kHeadingColor,
-                        fontSize: 16,
-                      ),
-                    ),
+                    (_auth.currentUser != null)
+                        ? Text(
+                            _auth.currentUser!.email ?? "",
+                            style: const TextStyle(
+                              color: Palette.kHeadingColor,
+                              fontSize: 16,
+                            ),
+                          )
+                        : SizedBox(),
                     SizedBox(
                       height: 40,
                     ),
