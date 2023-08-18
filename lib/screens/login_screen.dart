@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     });
                                     try {
                                       await _auth.signInWithEmailAndPassword(
-                                        email: emailController.text,
+                                        email: emailController.text.trim(),
                                         password: passwordController.text,
                                       );
 

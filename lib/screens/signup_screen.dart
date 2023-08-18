@@ -291,7 +291,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       });
                                       await _auth
                                           .createUserWithEmailAndPassword(
-                                        email: emailController.text,
+                                        email: emailController.text.trim(),
                                         password: passwordController.text,
                                       );
 
