@@ -2,7 +2,6 @@ import 'package:agricultural_insurance_system/configs/palette.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-
 ToastBottomSuccess(String message) {
   Fluttertoast.showToast(
       msg: message,
@@ -11,8 +10,7 @@ ToastBottomSuccess(String message) {
       timeInSecForIosWeb: 1,
       backgroundColor: const Color.fromARGB(10, 0, 0, 0),
       textColor: Colors.black,
-      fontSize: 16.0
-  );
+      fontSize: 16.0);
 }
 
 ToastBottomError(String message) {
@@ -23,6 +21,27 @@ ToastBottomError(String message) {
       timeInSecForIosWeb: 1,
       backgroundColor: Palette.kWarningBackground,
       textColor: Palette.kWarningColor,
-      fontSize: 16.0
-  );
+      fontSize: 16.0);
+}
+
+ToastCenterSuccess(String message) {
+  Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: const Color.fromARGB(10, 0, 0, 0),
+      textColor: Colors.black,
+      fontSize: 16.0);
+}
+
+ToastCenterError(String message) {
+  Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Palette.kWarningBackground,
+      textColor: Palette.kWarningColor,
+      fontSize: 16.0);
 }
