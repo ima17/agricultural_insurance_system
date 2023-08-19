@@ -6,6 +6,7 @@ import 'package:agricultural_insurance_system/widgets/button_card.dart';
 import 'package:agricultural_insurance_system/widgets/button_widget.dart';
 import 'package:agricultural_insurance_system/widgets/home_screen_card.dart';
 import 'package:agricultural_insurance_system/widgets/loading_widget.dart';
+import 'package:agricultural_insurance_system/widgets/toast.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +32,10 @@ class _HomeScreenState extends State<HomeScreen> {
   LocationService location = LocationService();
   Position? currentPosition;
   late String datetime;
-  int tempreture=0;
-  String cityName="";
-  String weatherIcon="";
-  String name="";
+  int tempreture = 0;
+  String cityName = "";
+  String weatherIcon = "";
+  String name = "";
   bool isLoading = true;
 
   late User loggedInUser;
@@ -95,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       }
     } catch (e) {
-      print(e);
+      ToastBottomError("Something went wrong");
     }
   }
 

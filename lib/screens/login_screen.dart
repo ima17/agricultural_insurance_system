@@ -174,6 +174,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                         email: emailController.text,
                                         password: passwordController.text,
                                       );
+
+                                      ToastBottomSuccess(
+                                          "Logged in successfully");
+
                                       Navigator.pushReplacement<void, void>(
                                         context,
                                         MaterialPageRoute<void>(
@@ -194,8 +198,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 "Wrong Password";
                                             _passwordInputError = true;
                                           });
-                                          ToastBottomError(
-                                              'Error picking image');
                                         } else if (e.code == 'invalid-email') {
                                           setState(() {
                                             _emailAddressErrorHint =

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:agricultural_insurance_system/widgets/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -116,6 +117,9 @@ class _RecordingScreenState extends State<RecordingScreen> {
                         isLoading = true;
                       });
                       ApplicationData? applicationData = await uploadAudio();
+
+                      ToastBottomSuccess("Application Filled");
+
                       if (applicationData != null) {
                         Navigator.push(
                           context,
@@ -126,7 +130,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                           ),
                         );
                       } else {
-                        print("Something went wrong");
+                        ToastBottomError("Something went wrong");
                       }
                       setState(() {
                         isLoading = false;

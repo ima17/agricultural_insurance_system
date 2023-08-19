@@ -309,6 +309,9 @@ class _SignupScreenState extends State<SignupScreen> {
                                         });
                                       }
 
+                                      ToastBottomSuccess(
+                                          "Account created Successfully");
+
                                       Navigator.pushReplacement<void, void>(
                                         context,
                                         MaterialPageRoute<void>(
