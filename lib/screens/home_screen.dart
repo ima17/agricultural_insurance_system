@@ -1,9 +1,6 @@
-import 'package:agricultural_insurance_system/configs/palette.dart';
 import 'package:agricultural_insurance_system/screens/filled_application_screen.dart';
-import 'package:agricultural_insurance_system/screens/login_screen.dart';
 import 'package:agricultural_insurance_system/screens/recording_screen.dart';
 import 'package:agricultural_insurance_system/widgets/button_card.dart';
-import 'package:agricultural_insurance_system/widgets/button_widget.dart';
 import 'package:agricultural_insurance_system/widgets/home_screen_card.dart';
 import 'package:agricultural_insurance_system/widgets/loading_widget.dart';
 import 'package:agricultural_insurance_system/widgets/toast.dart';
@@ -37,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String weatherIcon = "";
   String name = "";
   bool isLoading = true;
+  String? imageUrl;
 
   late User loggedInUser;
 
@@ -49,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
       getCurrentUser(),
       fetchData(),
       getDateTime(),
+      fetchProfileImage(),
     ]).then((_) {
       setState(() {
         isLoading = false;
@@ -100,6 +99,24 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> fetchProfileImage() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        final userData =
+            await _fireStore.collection('users').doc(user.uid).get();
+        final data = userData.data();
+        if (data != null && data.containsKey('imageUrl')) {
+          setState(() {
+            imageUrl = data['imageUrl'];
+          });
+        }
+      }
+    } catch (e) {
+      ToastBottomError('Something went wrong');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -109,6 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 TopContainer(
                   name: name,
+                  imageUrl: imageUrl ?? imageUrl,
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -159,21 +177,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                         ],
-                      ),
-                      Spacer(),
-                      ButtonWidget(
-                        buttonTextColor: Palette.kDarkBlackColor,
-                        buttonBGColor: Palette.kLightWhiteColor,
-                        buttonText: "Sign Out",
-                        buttonTriggerFunction: () async {
-                          await _auth.signOut();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (BuildContext context) => LoginScreen(),
-                            ),
-                          );
-                        },
                       ),
                     ],
                   ),

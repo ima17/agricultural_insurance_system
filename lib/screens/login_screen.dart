@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Container(
                 height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
+                  color: Palette.kBackgroundColor,
                   image: DecorationImage(
                     image: AssetImage('assets/images/back.png'),
                     opacity: 0.8,
@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     });
                                     try {
                                       await _auth.signInWithEmailAndPassword(
-                                        email: emailController.text,
+                                        email: emailController.text.trim(),
                                         password: passwordController.text,
                                       );
 

@@ -56,7 +56,7 @@ class _SignupScreenState extends State<SignupScreen> {
             height: MediaQuery.of(context).size.height +
                 MediaQuery.of(context).viewInsets.bottom,
             decoration: const BoxDecoration(
-              color: Colors.white,
+              color: Palette.kBackgroundColor,
               image: DecorationImage(
                 image: AssetImage('assets/images/back.png'),
                 opacity: 0.8,
@@ -291,7 +291,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                       });
                                       await _auth
                                           .createUserWithEmailAndPassword(
-                                        email: emailController.text,
+                                        email: emailController.text.trim(),
                                         password: passwordController.text,
                                       );
 

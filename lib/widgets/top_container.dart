@@ -1,3 +1,4 @@
+import 'package:agricultural_insurance_system/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -5,9 +6,11 @@ import '../configs/palette.dart';
 
 class TopContainer extends StatelessWidget {
   final String? name;
+  final String? imageUrl;
   const TopContainer({
     Key? key,
     required this.name,
+    this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -49,7 +52,7 @@ class TopContainer extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      name ?? "User",
+                      name ?? "",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
@@ -58,10 +61,22 @@ class TopContainer extends StatelessWidget {
                     ),
                   ],
                 ),
-                CircleAvatar(
-                  backgroundImage: NetworkImage(
-                    'https://cdn.pixabay.com/photo/2022/09/08/15/16/cute-7441224_1280.jpg',
+                GestureDetector(
+                  child: CircleAvatar(
+                    backgroundImage: imageUrl != null
+                        ? NetworkImage(imageUrl!) as ImageProvider<Object>?
+                        : const AssetImage('assets/images/user.png'),
                   ),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => ProfileScreen(
+                          name: name ?? "",
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
