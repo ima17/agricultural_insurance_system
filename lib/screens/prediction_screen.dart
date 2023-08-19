@@ -57,7 +57,7 @@ class _PredictionScreenState extends State<PredictionScreen> {
   Widget build(BuildContext context) {
     return !isLoading
         ? Scaffold(
-            appBar: CustomAppBar(elevation: 0, title: 'Predicted Preemium'),
+            appBar: CustomAppBar(elevation: 0, title: 'Predicted Premium'),
             body: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(

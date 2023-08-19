@@ -1,3 +1,4 @@
+import 'package:agricultural_insurance_system/screens/filled_application_screen.dart';
 import 'package:agricultural_insurance_system/screens/recording_screen.dart';
 import 'package:agricultural_insurance_system/widgets/button_card.dart';
 import 'package:agricultural_insurance_system/widgets/home_screen_card.dart';
@@ -9,9 +10,7 @@ import '../widgets/top_container.dart';
 
 class HomeScreen extends StatefulWidget {
   final weatherData;
-  const HomeScreen(
-      {Key? key, required this.weatherData})
-      : super(key: key);
+  const HomeScreen({Key? key, required this.weatherData}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -63,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(height: 160), 
+                SizedBox(height: 160),
                 HomeScreenCard(
                   location: cityName,
                   date: datetime,
@@ -93,7 +92,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: ButtonCard(
                         iconLink: "assets/icons/filled.png",
                         label: 'Show Filled Applications',
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  FilledApplicationScreen(),
+                            ),
+                          );
+                        },
                       ),
                     ),
                   ],
