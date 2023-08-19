@@ -5,7 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../configs/palette.dart';
+import '../constants/theme_constants.dart';
 import '../widgets/button_widget.dart';
+import '../widgets/forgot_password_widget.dart';
 import '../widgets/input_widget.dart';
 import '../widgets/toast.dart';
 
@@ -131,7 +133,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               SizedBox(
                                 width: double.maxFinite,
                                 child: InkWell(
-                                  onTap: () => () {},
+                                  onTap: () {
+                                    _onButtonPressed();
+                                  },
                                   child: const Text(
                                     'Forgot Password?',
                                     textAlign: TextAlign.end,
@@ -284,5 +288,48 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           );
+  }
+
+  void _onButtonPressed() {
+    showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        clipBehavior: Clip.none,
+        barrierColor: Colors.black.withOpacity(0.4),
+        backgroundColor: Colors.transparent,
+        builder: (context) {
+          return SingleChildScrollView(
+            child: Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.center,
+              children: [
+                Container(
+                  child: const ForgotPassword(),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).canvasColor,
+                    borderRadius: const BorderRadius.only(
+                      topLeft:
+                          Radius.circular(ThemeConstants.borderRadius * 2.5),
+                      topRight:
+                          Radius.circular(ThemeConstants.borderRadius * 2.5),
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: -15.0,
+                  child: Container(
+                    width: 100.0,
+                    height: 4.0,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).canvasColor,
+                      borderRadius: BorderRadius.circular(
+                          ThemeConstants.borderRadius * 2.5),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        });
   }
 }
