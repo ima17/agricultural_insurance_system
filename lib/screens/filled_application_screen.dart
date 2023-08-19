@@ -46,11 +46,11 @@ class _FilledApplicationScreenState extends State<FilledApplicationScreen> {
 
         final policyNumberValue = applicationValues.firstWhere(
           (value) => value.title == 'Policy Number',
-          orElse: () => ValueObject(title: '', value: ''),
+          orElse: () => ValueObject(title: '', value: '', icon: FontAwesomeIcons.solidCircle),
         );
         final nameValue = applicationValues.firstWhere(
           (value) => value.title == 'Name',
-          orElse: () => ValueObject(title: '', value: ''),
+          orElse: () => ValueObject(title: '', value: '',icon: FontAwesomeIcons.solidCircle),
         );
 
         final cardValue = ValueObject(

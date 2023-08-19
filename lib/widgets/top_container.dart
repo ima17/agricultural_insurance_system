@@ -4,8 +4,10 @@ import 'package:intl/intl.dart';
 import '../configs/palette.dart';
 
 class TopContainer extends StatelessWidget {
+  final String? name;
   const TopContainer({
     Key? key,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -47,7 +49,7 @@ class TopContainer extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'Imantha Sudaraka',
+                      name ?? "User",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24,
