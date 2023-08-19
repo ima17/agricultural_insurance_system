@@ -148,24 +148,21 @@ class _ResultScreenState extends State<ResultScreen> {
           children: [
             Expanded(
               child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ListView.builder(
-                    itemCount: values.length,
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final title = values[index]['title'];
-                      final value = values[index]['value'];
-                      final icon = values[index]['icon'];
+                child: ListView.builder(
+                  itemCount: values.length,
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    final title = values[index]['title'];
+                    final value = values[index]['value'];
+                    final icon = values[index]['icon'];
 
-                      return InfoCard(
-                        icon: icon,
-                        infoTitle: title,
-                        info: value,
-                      );
-                    },
-                  ),
+                    return InfoCard(
+                      icon: icon,
+                      infoTitle: title,
+                      info: value,
+                    );
+                  },
                 ),
               ),
             ),
