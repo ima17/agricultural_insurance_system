@@ -12,7 +12,7 @@
 
 
    <application
-        android:label="agricultural_insurance_system"
+        android:label="AgroInsure"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
