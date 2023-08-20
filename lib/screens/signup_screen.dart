@@ -4,6 +4,7 @@ import 'package:agricultural_insurance_system/widgets/loading_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../configs/palette.dart';
 import '../utils/validator.dart';
@@ -289,11 +290,18 @@ class _SignupScreenState extends State<SignupScreen> {
                                       setState(() {
                                         isLoading = true;
                                       });
-                                      await _auth
+                                       UserCredential userCredential = await _auth
                                           .createUserWithEmailAndPassword(
                                         email: emailController.text.trim(),
                                         password: passwordController.text,
                                       );
+
+                                      String? token = await userCredential.user!
+                                          .getIdToken();
+
+                                      SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      await prefs.setString('token', token!);
 
                                       // Get the current user after successful registration
                                       User? user = _auth.currentUser;

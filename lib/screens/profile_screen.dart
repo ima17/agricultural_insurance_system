@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../configs/palette.dart';
 import '../widgets/button_widget.dart';
@@ -234,6 +235,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         buttonText: "Sign Out",
                         buttonTriggerFunction: () async {
                           await _auth.signOut();
+
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          await prefs.remove('token');
+
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

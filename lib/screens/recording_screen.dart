@@ -118,7 +118,7 @@ class _RecordingScreenState extends State<RecordingScreen> {
                       });
                       ApplicationData? applicationData = await uploadAudio();
 
-                      ToastBottomSuccess("Application Filled");
+                      ToastCenterSuccess("Application Filled");
 
                       if (applicationData != null) {
                         Navigator.push(
